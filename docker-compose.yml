@@ -26,7 +26,7 @@ services:
       - queue
 
   queue:
-    image: rabbitmq:3.11.3-alpine
+    image: rabbitmq:3.11.3-management-alpine
     ports: 
       - ${QUEUE_PORT}:${QUEUE_PORT}
       - ${QUEUE_MANAGEMENT_PORT}:${QUEUE_MANAGEMENT_PORT}
