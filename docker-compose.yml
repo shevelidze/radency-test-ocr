@@ -1,0 +1,36 @@
+version: "1.0"
+
+services:
+  web-api:
+    build: ./web-api
+    volumes:
+      - ./web-api/src:/app/src
+    environment:
+      QUEUE_PORT: ${QUEUE_PORT}
+      QUEUE_USER: ${QUEUE_USER}
+      QUEUE_PASSWORD: ${QUEUE_PASSWORD}
+    ports:
+      - ${WEB_API_PORT}:${WEB_API_PORT}
+    depends_on:
+      - queue
+
+  ocr:
+    build: ./ocr
+    volumes:
+      - ./ocr/src:/app/src
+    environment:
+      QUEUE_PORT: ${QUEUE_PORT}
+      QUEUE_USER: ${QUEUE_USER}
+      QUEUE_PASSWORD: ${QUEUE_PASSWORD}
+    depends_on:
+      - queue
+
+  queue:
+    image: rabbitmq:3.11.3-alpine
+    ports: 
+      - ${QUEUE_PORT}:${QUEUE_PORT}
+      - ${QUEUE_MANAGEMENT_PORT}:${QUEUE_MANAGEMENT_PORT}
+    environment:
+      RABBITMQ_DEFAULT_USER: ${QUEUE_USER}
+      RABBITMQ_DEFAULT_PASS: ${QUEUE_PASSWORD}
+
