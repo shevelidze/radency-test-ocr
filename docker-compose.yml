@@ -4,7 +4,7 @@ services:
   web-api:
     build: ./web-api
     volumes:
-      - ./web-api/src:/app/src
+      - ./web-api/src:/usr/src/app/src
     environment:
       QUEUE_PORT: ${QUEUE_PORT}
       QUEUE_USER: ${QUEUE_USER}
@@ -17,7 +17,7 @@ services:
   ocr:
     build: ./ocr
     volumes:
-      - ./ocr/src:/app/src
+      - ./ocr/src:/usr/src/app/src
     environment:
       QUEUE_PORT: ${QUEUE_PORT}
       QUEUE_USER: ${QUEUE_USER}
