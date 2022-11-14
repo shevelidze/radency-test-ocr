@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { mockedAppService } from '../test/app.service.mock';
 
 describe('AppController', () => {
   let appController: AppController;
@@ -8,15 +9,26 @@ describe('AppController', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [AppService],
+      providers: [
+        {
+          provide: AppService,
+          useValue: mockedAppService,
+        },
+      ],
     }).compile();
 
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  describe('handle ocr file event', () => {
+    it('should call the app service', () => {
+      const fileUrl = 'http://google.com';
+
+      appController.handleOcrFile(fileUrl);
+      expect(mockedAppService.getTextFromImage.mock.calls.length).toBe(1);
+      expect(mockedAppService.getTextFromImage.mock.calls[0]).toEqual([
+        fileUrl,
+      ]);
     });
   });
 });
