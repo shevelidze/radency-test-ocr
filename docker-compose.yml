@@ -19,6 +19,7 @@ services:
     build: ./ocr
     volumes:
       - ./ocr/src:/usr/src/app/src
+    container_name: ocr-worker
     environment:
       QUEUE_PORT: ${QUEUE_PORT}
       QUEUE_USER: ${QUEUE_USER}
