@@ -1,2 +1,2 @@
-docker attach radency-test-ocr-ocr-1
+docker attach ocr-worker
 
